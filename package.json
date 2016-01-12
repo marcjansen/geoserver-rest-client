@@ -1,0 +1,29 @@
+{
+  "name": "GeoServerRestClient",
+  "version": "0.0.1",
+  "description": "Interact with a GeoServer-instance via its REST-interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/**/*test.js",
+    "cover": "istanbul cover tape test/**/*test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcjansen/geoserver-rest-client.git"
+  },
+  "keywords": [
+    "GeoServer",
+    "REST",
+    "admin"
+  ],
+  "author": "Marc Jansen <jansen@terrestris.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcjansen/geoserver-rest-client/issues"
+  },
+  "homepage": "https://github.com/marcjansen/geoserver-rest-client#readme",
+  "devDependencies": {
+    "istanbul": "0.4.2",
+    "tape": "4.4.0"
+  }
+}

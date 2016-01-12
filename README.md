@@ -1,0 +1,3 @@
+# GeoServerRestClient
+
+work in progress
