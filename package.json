@@ -25,5 +25,9 @@
   "devDependencies": {
     "istanbul": "0.4.2",
     "tape": "4.4.0"
+  },
+  "dependencies": {
+    "q": "^1.4.1",
+    "request": "^2.67.0"
   }
 }
