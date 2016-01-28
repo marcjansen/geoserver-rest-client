@@ -6,7 +6,7 @@ var GeoServerRestClient = function (url, user, password) {
         return new GeoServerRestClient(url, user, password);
     }
     if (!url) {
-        throw new Exception("Parameter 'url' must not be empty");
+        throw new Error("Parameter 'url' must not be empty");
     }
     this._url = url;
     this._user = user;
@@ -26,7 +26,7 @@ GeoServerRestClient.prototype.getPassword = function() {
 };
 GeoServerRestClient.prototype.setUrl = function(url) {
     if (!url) {
-        throw new Exception("Parameter 'url' must not be empty");
+        throw new Error("Parameter 'url' must not be empty");
     }
     this._url = url;
     this.build();

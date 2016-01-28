@@ -3,50 +3,52 @@ var test = require("tape");
 var GeoServerRestClient = require("../index.js");
 
 test("Exports", function (t) {
-  t.plan(1);
-  t.ok(GeoServerRestClient instanceof Function, "GeoServerRestClient exported");
+    t.plan(1);
+    t.ok(GeoServerRestClient instanceof Function,
+        "GeoServerRestClient exported");
 });
 
 test("Instanciation with `new`", function (t) {
-  t.plan(1);
-  var client = new GeoServerRestClient("http://localhost:8080/geoserver");
-  t.ok(client instanceof GeoServerRestClient,
+    t.plan(1);
+    var client = new GeoServerRestClient("http://localhost:8080/geoserver");
+    t.ok(client instanceof GeoServerRestClient,
       "client can be instanciated with new");
 });
 
 test("Instanciation without `new`", function (t) {
-  t.plan(1);
-  var client = GeoServerRestClient("http://localhost:8080/geoserver");
-  t.ok(client instanceof GeoServerRestClient,
-      "client can be instanciated without new");
+    t.plan(1);
+    var client = GeoServerRestClient("http://localhost:8080/geoserver");
+    t.ok(client instanceof GeoServerRestClient,
+        "client can be instanciated without new");
 });
 
 test("First parameter (url) is required", function(t) {
-  t.plan(4);
-  var client1;
-  var client2;
-  t.throws(function(){
-    client1 = new GeoServerRestClient();
-  });
-  t.ok(client1 === undefined, "Constructor throws without url");
-  t.doesNotThrow(function(){
-    client2 = new GeoServerRestClient("some-url");
-  });
-  t.ok(client2 instanceof GeoServerRestClient, "Constructor works with url");
+    t.plan(4);
+    var client1;
+    var client2;
+    t.throws(function(){
+        client1 = new GeoServerRestClient();
+    });
+    t.ok(client1 === undefined, "Constructor throws without url");
+    t.doesNotThrow(function(){
+        client2 = new GeoServerRestClient("some-url");
+    });
+    t.ok(client2 instanceof GeoServerRestClient, "Constructor works with url");
 });
 
 test("API", function (t) {
-  var methods = [
-    "getUrl", "setUrl",
-    "getUser", "setUser",
-    "getPassword", "setPassword",
-    "build"
-  ];
-  t.plan(methods.length);
-  var client = GeoServerRestClient("http://localhost:8080/geoserver");
-  methods.forEach(function(methodName) {
-    t.ok(client[methodName] instanceof Function, methodName + " is a function");
-  });
+    var methods = [
+        "getUrl", "setUrl",
+        "getUser", "setUser",
+        "getPassword", "setPassword",
+        "build"
+    ];
+    t.plan(methods.length);
+    var client = GeoServerRestClient("http://localhost:8080/geoserver");
+    methods.forEach(function(methodName) {
+        t.ok(client[methodName] instanceof Function,
+            methodName + " is a function");
+    });
 });
 
 test("getUrl", function(t) {
@@ -60,19 +62,19 @@ test("setUrl", function(t) {
     client.setUrl("FOO");
     t.equals(client.getUrl(), "FOO", "Setter for `url` works");
     t.throws(function() {
-      client.setUrl()
+        client.setUrl();
     });
     t.throws(function() {
-      client.setUrl(null)
+        client.setUrl(null);
     });
     t.throws(function() {
-      client.setUrl("")
+        client.setUrl("");
     });
     t.throws(function() {
-      client.setUrl(0)
+        client.setUrl(0);
     });
     t.throws(function() {
-      client.setUrl(false)
+        client.setUrl(false);
     });
 });
 
