@@ -4,6 +4,8 @@
   "description": "Interact with a GeoServer-instance via its REST-interface.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint test/ src/ examples/",
+    "pretest": "npm run lint",
     "test": "tape test/**/*test.js",
     "cover": "istanbul cover tape test/**/*test.js"
   },
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/marcjansen/geoserver-rest-client#readme",
   "devDependencies": {
+    "eslint": "1.10.3",
     "istanbul": "0.4.2",
     "tape": "4.4.0"
   },
