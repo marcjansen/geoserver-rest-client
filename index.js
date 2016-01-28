@@ -1,1 +1,1 @@
-exports = module.exports = require("./src/GeoServerRestClient.js");
+exports = module.exports = require("./src/geoserver-rest-client.js");

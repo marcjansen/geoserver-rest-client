@@ -1,9 +1,9 @@
 var request = require('request');
 var Q = require('q');
 
-var GeoServerRestClient = function (url, user, password) {
-    if (!(this instanceof GeoServerRestClient)) {
-        return new GeoServerRestClient(url, user, password);
+var GSRC = function (url, user, password) {
+    if (!(this instanceof GSRC)) {
+        return new GSRC(url, user, password);
     }
     if (!url) {
         throw new Error("Parameter 'url' must not be empty");
@@ -15,16 +15,16 @@ var GeoServerRestClient = function (url, user, password) {
     this.build();
 };
 
-GeoServerRestClient.prototype.getUrl = function() {
+GSRC.prototype.getUrl = function() {
     return this._url;
 };
-GeoServerRestClient.prototype.getUser = function() {
+GSRC.prototype.getUser = function() {
     return this._user;
 };
-GeoServerRestClient.prototype.getPassword = function() {
+GSRC.prototype.getPassword = function() {
     return this._password;
 };
-GeoServerRestClient.prototype.setUrl = function(url) {
+GSRC.prototype.setUrl = function(url) {
     if (!url) {
         throw new Error("Parameter 'url' must not be empty");
     }
@@ -32,17 +32,17 @@ GeoServerRestClient.prototype.setUrl = function(url) {
     this.build();
     return this;
 };
-GeoServerRestClient.prototype.setUser = function(user) {
+GSRC.prototype.setUser = function(user) {
     this._user = user;
     this.build();
     return this;
 };
-GeoServerRestClient.prototype.setPassword = function(password) {
+GSRC.prototype.setPassword = function(password) {
     this._password = password;
     this.build();
     return this;
 };
-GeoServerRestClient.prototype.build = function() {
+GSRC.prototype.build = function() {
     this.req = request.defaults({
         baseUrl: this.getUrl(),
         auth: {
@@ -51,18 +51,18 @@ GeoServerRestClient.prototype.build = function() {
         }
     });
 };
-GeoServerRestClient.reject = function(defer, cb, err) {
+GSRC.reject = function(defer, cb, err) {
     cb = cb || function(){};
     err = typeof err === 'string' ? new Error(err) : err;
     cb(err);
     defer.reject(err);
 };
-GeoServerRestClient.resolve = function(defer, cb, data) {
+GSRC.resolve = function(defer, cb, data) {
     cb = cb || function(){};
     cb(null, data);
     defer.resolve(data);
 };
-GeoServerRestClient.prototype.exists = function(cb){
+GSRC.prototype.exists = function(cb){
     var opts = {
         url: '/rest',
         method: 'HEAD'
@@ -70,21 +70,21 @@ GeoServerRestClient.prototype.exists = function(cb){
     var defer = Q.defer();
     this.req(opts, function(err, resp){
         if (err) {
-            GeoServerRestClient.reject(defer, cb, err);
+            GSRC.reject(defer, cb, err);
         } else if (resp.statusCode === 200) {
-            GeoServerRestClient.resolve(defer, cb);
+            GSRC.resolve(defer, cb);
         } else if (resp.statusCode === 404) {
-            GeoServerRestClient.reject(defer, cb, "404: URL seems wrong");
+            GSRC.reject(defer, cb, "404: URL seems wrong");
         } else if (resp.statusCode === 401) {
-            GeoServerRestClient.reject(
+            GSRC.reject(
                 defer, cb, "401: Credentials wrong or missing"
             );
         } else {
             var msg = "Unspecified error, code: " + resp.statusCode;
-            GeoServerRestClient.reject(defer, cb, msg);
+            GSRC.reject(defer, cb, msg);
         }
     });
     return defer.promise;
 };
 
-exports = module.exports = GeoServerRestClient;
+exports = module.exports = GSRC;

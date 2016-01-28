@@ -1,5 +1,5 @@
 {
-  "name": "GeoServerRestClient",
+  "name": "geoserver-rest-client",
   "version": "0.0.1",
   "description": "Interact with a GeoServer-instance via its REST-interface.",
   "main": "index.js",
