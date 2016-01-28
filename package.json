@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/marcjansen/geoserver-rest-client#readme",
   "devDependencies": {
+    "coveralls": "2.11.6",
     "eslint": "1.10.3",
     "istanbul": "0.4.2",
     "tape": "4.4.0"
