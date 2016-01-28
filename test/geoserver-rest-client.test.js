@@ -36,18 +36,30 @@ test("First parameter (url) is required", function(t) {
     t.ok(client2 instanceof GSRC, "Constructor works with url");
 });
 
+test("Static functions", function(t) {
+    var methods = [
+        "reject", "resolve"
+    ];
+    t.plan(methods.length);
+    methods.forEach(function(methodName) {
+        t.ok(GSRC[methodName] instanceof Function,
+            methodName + " is a function of the GSRC object");
+    });
+});
+
 test("API", function (t) {
     var methods = [
         "getUrl", "setUrl",
         "getUser", "setUser",
         "getPassword", "setPassword",
-        "build"
+        "build",
+        "exists"
     ];
     t.plan(methods.length);
     var client = GSRC("http://localhost:8080/geoserver");
     methods.forEach(function(methodName) {
         t.ok(client[methodName] instanceof Function,
-            methodName + " is a function");
+            methodName + " is an GSRC instance method");
     });
 });
 
@@ -63,19 +75,19 @@ test("setUrl", function(t) {
     t.equals(client.getUrl(), "FOO", "Setter for `url` works");
     t.throws(function() {
         client.setUrl();
-    });
+    }, Error, "throws when url undefined");
     t.throws(function() {
         client.setUrl(null);
-    });
+    }, Error, "throws when url null");
     t.throws(function() {
         client.setUrl("");
-    });
+    }, Error, "throws when url ''");
     t.throws(function() {
         client.setUrl(0);
-    });
+    }, Error, "throws when url 0");
     t.throws(function() {
         client.setUrl(false);
-    });
+    }, Error, "throws when url false");
 });
 
 test("getUser", function(t) {
