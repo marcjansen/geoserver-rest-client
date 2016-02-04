@@ -6,21 +6,46 @@ var gsClient = new GSRC(
     );
 
 
-// with callback
-gsClient
-    .exists(function(err){
-        if (!err) {
-            console.log("ALL GOOD!");
-            return;
-        }
-        console.error(err);
-    });
+// // with callback
+// gsClient
+//     .exists(function(err){
+//         if (!err) {
+//             console.log("ALL GOOD!");
+//             return;
+//         }
+//         console.error(err);
+//     });
+//
+// // with promise
+// gsClient
+//     .exists()
+//     .then(function(){
+//         console.log("ALL GOOD!");
+//     })
+//     .fail(function(err){
+//         console.error(err);
+//     });
 
-// with promise
+var wsName;
+
 gsClient
-    .exists()
-    .then(function(){
-        console.log("ALL GOOD!");
+    .workspaces()
+    .then(function(data){
+        console.log("got " + data.workspaces.workspace.length + " ws");
+        return gsClient.workspace(data.workspaces.workspace[4].name);
+    })
+    .then(function(data) {
+        console.log("got details of " + data.workspace.name + " ws");
+        wsName = data.workspace.name;
+        return gsClient.datastores(wsName);
+    })
+    .then(function(data){
+        console.log("got " + data.dataStores.dataStore.length + " ds");
+        return gsClient.datastore(wsName, data.dataStores.dataStore[0].name);
+    })
+    .then(function(data){
+        console.log("got details of " + data.dataStore.name + " ds");
+        console.log(data);
     })
     .fail(function(err){
         console.error(err);

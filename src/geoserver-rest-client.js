@@ -87,4 +87,105 @@ GSRC.prototype.exists = function(cb){
     return defer.promise;
 };
 
+GSRC.prototype.workspaces = function(cb){
+    var opts = {
+        url: '/rest/workspaces.json',
+        method: 'GET'
+    };
+    var defer = Q.defer();
+    this.req(opts, function(err, resp, body){
+        if (err) {
+            GSRC.reject(defer, cb, err);
+        } else if (resp.statusCode === 200) {
+            GSRC.resolve(defer, cb, JSON.parse(body));
+        } else if (resp.statusCode === 404) {
+            GSRC.reject(defer, cb, "404: URL seems wrong");
+        } else if (resp.statusCode === 401) {
+            GSRC.reject(
+                defer, cb, "401: Credentials wrong or missing"
+            );
+        } else {
+            var msg = "Unspecified error, code: " + resp.statusCode;
+            GSRC.reject(defer, cb, msg);
+        }
+    });
+    return defer.promise;
+};
+
+GSRC.prototype.workspace = function(name, cb){
+    var opts = {
+        url: '/rest/workspaces/' + name + '.json',
+        method: 'GET'
+    };
+    var defer = Q.defer();
+    this.req(opts, function(err, resp, body){
+        if (err) {
+            GSRC.reject(defer, cb, err);
+        } else if (resp.statusCode === 200) {
+            GSRC.resolve(defer, cb, JSON.parse(body));
+        } else if (resp.statusCode === 404) {
+            GSRC.reject(defer, cb, "404: URL seems wrong");
+        } else if (resp.statusCode === 401) {
+            GSRC.reject(
+                defer, cb, "401: Credentials wrong or missing"
+            );
+        } else {
+            var msg = "Unspecified error, code: " + resp.statusCode;
+            GSRC.reject(defer, cb, msg);
+        }
+    });
+    return defer.promise;
+};
+
+GSRC.prototype.datastores = function(wsName, cb) {
+    var opts = {
+        url: '/rest/workspaces/' + wsName + '/datastores.json',
+        method: 'GET'
+    };
+    var defer = Q.defer();
+    this.req(opts, function(err, resp, body){
+        if (err) {
+            GSRC.reject(defer, cb, err);
+        } else if (resp.statusCode === 200) {
+            GSRC.resolve(defer, cb, JSON.parse(body));
+        } else if (resp.statusCode === 404) {
+            GSRC.reject(defer, cb, "404: URL seems wrong");
+        } else if (resp.statusCode === 401) {
+            GSRC.reject(
+                defer, cb, "401: Credentials wrong or missing"
+            );
+        } else {
+            var msg = "Unspecified error, code: " + resp.statusCode;
+            GSRC.reject(defer, cb, msg);
+        }
+    });
+    return defer.promise;
+};
+
+GSRC.prototype.datastore = function(wsName, dsName, cb) {
+    var opts = {
+        url: '/rest/workspaces/' + wsName + '/datastores/' + dsName + '.json',
+        method: 'GET'
+    };
+    var defer = Q.defer();
+    this.req(opts, function(err, resp, body){
+        if (err) {
+            GSRC.reject(defer, cb, err);
+        } else if (resp.statusCode === 200) {
+            GSRC.resolve(defer, cb, JSON.parse(body));
+        } else if (resp.statusCode === 404) {
+            GSRC.reject(defer, cb, "404: URL seems wrong");
+        } else if (resp.statusCode === 401) {
+            GSRC.reject(
+                defer, cb, "401: Credentials wrong or missing"
+            );
+        } else {
+            var msg = "Unspecified error, code: " + resp.statusCode;
+            GSRC.reject(defer, cb, msg);
+        }
+    });
+    return defer.promise;
+};
+
+
 exports = module.exports = GSRC;
